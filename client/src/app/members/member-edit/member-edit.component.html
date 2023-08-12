@@ -1,1 +1,82 @@
-<p>member-edit works!</p>
+
+<div class="row" *ngIf="member">
+   <div class="col-4">
+      <h1>Профиль</h1>
+   </div>
+   <div class="col-8">
+      <div class="alert alert-info" *ngIf="editForm.dirty">
+         <p><strong>Внимание:</strong>Вы изменили ваш профиль.Все несохранённые данные будут утеряны</p>
+      </div>
+   </div>
+   <div class="col-4">
+      <div class="card">
+         <img src="{{member.photoUrl}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+      <div class="card-body">
+         <div>
+            <strong>Откуда:</strong>
+            <p>{{member.city}}, {{member.country}}</p>
+         </div>
+
+         <div>
+            <strong>Возраст:</strong>
+            <p>{{member.age}}</p>
+         </div>
+
+         <div>
+            <strong>Был(а) в сети:</strong>
+            <p>{{member.lastActive}}</p>
+         </div>
+
+         <div>
+            <strong>С нами:</strong>
+            <p>{{member.created}}</p>
+         </div>
+      </div>
+         <div class="card-footer">
+            <button type="submit" [disabled]="!editForm.dirty" form="editForm" class="btn btn-success col-12">Сохранить</button> 
+         </div>
+      </div>
+   </div>
+
+   <div class="col-8">
+      <tabset class="member-tabset">
+         <tab heading="Обо мне">
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+               <h4 class="mt-2">Введение</h4>
+               <textarea 
+                  class="form-control" 
+                  [(ngModel)]="member.introduction" 
+                  name="introduction"
+                  rows="6">
+               </textarea>
+               <h4 class="mt-2">В поисках</h4>
+               <textarea 
+                  class="form-control" 
+                  [(ngModel)]="member.lookingFor" 
+                  name="lookingFor"
+                  rows="6">
+               </textarea>
+               <h4 class="mt-2">Интересы</h4>
+               <textarea 
+                  class="form-control" 
+                  [(ngModel)]="member.interests" 
+                  name="interests"
+                  rows="6">
+               </textarea>
+               <h4 class="mt-2">Местоположение</h4>
+               <div class="d-flex flex-row align-items-center">
+                  <label for="city">Город:</label>
+                  <input type="text" [(ngModel)]="member.city" name="city" class="form-control mx-2">
+                  <label for="country">Страна:</label>
+                  <input type="text" [(ngModel)]="member.country" name="country" class="form-control mx-2">
+               </div>
+            </form>
+
+         </tab>
+
+         <tab heading="Моя галерея">
+            <h4>Скоро</h4>
+         </tab>
+      </tabset>
+   </div>
+</div>
