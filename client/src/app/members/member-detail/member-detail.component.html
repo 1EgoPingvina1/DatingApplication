@@ -1,1 +1,65 @@
-<p>member-detail works!</p>
+
+<div class="row" *ngIf="member">
+   <div class="col-4">
+      <div class="card">
+         <img src="{{member.photoUrl}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+
+      <div class="card-body">
+         <div>
+            <strong>Откуда:</strong>
+            <p>{{member.city}}, {{member.country}}</p>
+         </div>
+
+         <div>
+            <strong>Возраст:</strong>
+            <p>{{member.age}}</p>
+         </div>
+
+         <div>
+            <strong>Был(а) в сети:</strong>
+            <p>{{member.lastActive}}</p>
+         </div>
+
+         <div>
+            <strong>С нами:</strong>
+            <p>{{member.created}}</p>
+         </div>
+      </div>
+
+      <div class="card-footer">
+         <div class="btn-group d-flex">
+            <button class="btn btn-danger">Нравится</button>
+            <button class="btn btn-success">Написать</button>
+
+         </div>
+      </div>
+      </div>
+      
+   </div>
+
+   <div class="col-8">
+      <tabset class="member-tabset">
+         <tab heading="Обо мне">
+            <h4>Введение</h4>
+            <p>{{member.introduction}}</p>
+            <h4>В поисках</h4>
+            <p>{{member.lookingFor}}</p>
+         </tab>
+
+         <tab heading="Интересы">
+            <h4>Введение</h4>
+            <p>{{member.introduction}}</p>
+            <h4>В поисках</h4>
+            <p>{{member.lookingFor}}</p>
+         </tab>
+
+         <tab heading="Фотографии" #photoTab="tab">
+            <gallery *ngIf="photoTab.active" [items]="images" class="gallery"></gallery>
+         </tab>
+
+         <tab heading="Сообщение">
+            <h4>Скоро</h4>
+         </tab>
+      </tabset>
+   </div>
+</div>
