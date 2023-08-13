@@ -1,7 +1,9 @@
 ﻿using API.Data;
 using API.Interfaces;
 using API.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace API.Extensions
 {

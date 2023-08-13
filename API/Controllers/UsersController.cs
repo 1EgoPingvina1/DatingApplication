@@ -1,12 +1,9 @@
-﻿using API.Data;
-using API.DTOs;
-using API.Entities;
+﻿using API.DTOs;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -33,6 +30,20 @@ namespace API.Controllers
         {
             return await _userRepository.GetMemberAsync(username);
 
+        }
+        [Authorize]
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDTO memberUpdateDTO)
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; //If i not be use ? returns an exception
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            if(user == null) {
+                return NotFound();
+            }
+            _mapper.Map(memberUpdateDTO, user);
+            if(await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Ошибка изменения профиля");
         }
     }
 }
