@@ -1,21 +1,32 @@
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+<form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
    <h2 class="text-center text-primary">Регистрация</h2>
    <hr>
    <div class="mb-3">
-      <input type="text"
-         class="form-control"
-         name="username"
-         [(ngModel)]="model.username"
-         placeholder="Имя пользователя">
+      <input type="text" class="form-control"
+         [class.is-invalid]="registerForm.get('username')?.errors && registerForm.get('username')?.touched"
+         formControlName="username" placeholder="Имя пользователя">
+      <div class="invalid-feedback">Введите имя пользователя</div>
    </div>
 
    <div class="mb-3">
       <input type="password"
-         class="form-control"
-         name="password"
-         [(ngModel)]="model.password"
-         placeholder="Пароль">
+         [class.is-invalid]="registerForm.get('password')?.errors && registerForm.get('password')?.touched"
+         class="form-control" formControlName="password" placeholder="Пароль">
+         <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('required')">Введите пароль</div>
+         <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('minlength')">Пароль должен быть не менее 6 символов</div>
+         <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('maxlength')">Пароль не должен быть более 12 символов</div>
    </div>
+
+
+   <div class="mb-3">
+      <input type="password"
+         [class.is-invalid]="registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched"
+         class="form-control" formControlName="confirmPassword" placeholder="Повторите пароль">
+
+         <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.hasError('required')">Подтвердите ваш пароль</div>
+         <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.hasError('notMatching')">Пароли не совпадают</div>
+   </div>
+
 
    <div class="text-center">
       <button class="btn btn-success me-2" type="submit">Зарегистрироваться</button>
@@ -23,3 +34,6 @@
 
    </div>
 </form>
+
+<p>Значение: {{registerForm.value | json}}</p>
+<p>Статус: {{registerForm.status | json}}</p>
