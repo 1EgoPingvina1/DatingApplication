@@ -1,5 +1,5 @@
 
-<div class="row" *ngIf="member">
+<div class="row" >
    <div class="col-4">
       <div class="card">
          <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
@@ -29,8 +29,7 @@
       <div class="card-footer">
          <div class="btn-group d-flex">
             <button class="btn btn-danger">Нравится</button>
-            <button class="btn btn-success">Написать</button>
-
+            <button (click)="selectTab('Сообщения')" class="btn btn-success">Написать</button>
          </div>
       </div>
       </div>
@@ -38,27 +37,27 @@
    </div>
 
    <div class="col-8">
-      <tabset class="member-tabset">
-         <tab heading="Обо мне">
+      <tabset class="member-tabset" #memberTabs>
+         <tab heading="Обо мне" (selectTab)="onTabActivated($event)">
             <h4>Введение</h4>
             <p>{{member.introduction}}</p>
             <h4>В поисках</h4>
             <p>{{member.lookingFor}}</p>
          </tab>
 
-         <tab heading="Интересы">
+         <tab heading="Интересы" (selectTab)="onTabActivated($event)">
             <h4>Интересы</h4>
             <p>{{member.interests}}</p>
-
          </tab>
 
-         <tab heading="Фотографии" #photoTab="tab">
+         <tab heading="Фотографии" #photoTab="tab" (selectTab)="onTabActivated($event)">
             <gallery *ngIf="photoTab.active" [items]="images" class="gallery"></gallery>
          </tab>
 
-         <tab heading="Сообщение">
-            <h4>Скоро</h4>
+         <tab heading="Сообщения" (selectTab)="onTabActivated($event)">
+            <app-member-messages [username]="member.userName"></app-member-messages>
          </tab>
+
       </tabset>
    </div>
 </div>

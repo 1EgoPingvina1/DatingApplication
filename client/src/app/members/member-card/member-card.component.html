@@ -5,7 +5,7 @@
          <li class="list-inline-item">
             <button class="btn btn-primary" routerLink="/members/{{member.userName}}"><i class="fa fa-user"></i></button>
             <button class="btn btn-danger" (click)="addLike(member)"><i class="fa fa-heart"></i></button>
-            <button class="btn btn-success"><i class="fa fa-envelope"></i></button>
+            <button routerLink="/members/{{member.userName}}" [queryParams]="{tab: 'Сообщения'}" class="btn btn-success"><i class="fa fa-envelope"></i></button>
          </li>
       </ul>
    </div>
