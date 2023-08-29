@@ -1,14 +1,9 @@
 using API.Data;
+using API.Entities;
 using API.Extensions;
-using API.Interfaces;
 using API.Middleware;
-using API.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,8 +41,12 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     await context.Database.MigrateAsync();
-    await Seed.SeedUsers(context);
-}catch(Exception ex)
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+    await Seed.SeedUsers(userManager,roleManager);
+
+}
+catch(Exception ex)
 {
     var loger = services.GetService<ILogger<Program>>();
     loger.LogError(ex, "Ошибка в неверной миграции");
