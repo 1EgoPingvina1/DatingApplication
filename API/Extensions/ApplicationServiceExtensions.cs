@@ -2,6 +2,7 @@
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
+using API.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -25,6 +26,8 @@ namespace API.Extensions
             services.AddScoped<LogUserActivity>();
             services.AddScoped<ILikeRepository,LikesRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
 
             return services;
         }

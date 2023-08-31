@@ -5,6 +5,9 @@
          <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
 
       <div class="card-body">
+         <div class="mb-2" *ngIf="(presenceService.onlineUsers$ | async)?.includes(member.userName)">
+            <i class="class fa fa-user-circle text-success"></i> В сети
+         </div>
          <div>
             <strong>Откуда:</strong>
             <p>{{member.city}}, {{member.country}}</p>
@@ -17,7 +20,7 @@
 
          <div>
             <strong>Был(а) в сети:</strong>
-            <p>{{member.lastActive + 'Z'| timeago}}</p>
+            <p>{{member.lastActive | timeago}}</p>
          </div>
 
          <div>
