@@ -4,7 +4,7 @@
          Нет сообщений
       </div>
 
-      <ul #scrollMe style="overflow: scroll; height: 500px;" [scrollTop]="scrollMe.scrollHeight" *ngIf="(messageService.messageThread$ | async)!.length > 0" class="chat">
+      <ul #scrollMe style="overflow-y: scroll; height: 500px;" [scrollTop]="scrollMe.scrollHeight" *ngIf="(messageService.messageThread$ | async)!.length > 0" class="chat">
          <li *ngFor="let message of (messageService.messageThread$ | async)">
             <div>
                <span class="chat-img float-end">
@@ -12,13 +12,13 @@
                </span>
                <div class="chat-body">
                   <div class="header">
+                     <span class="fa fa-clock-o">{{message.messageSent | timeago}}</span>
                      <small class="text-muted">
-                        <span class="fa fa-clock-o">{{message.messageSent | timeago}}</span>
-                        <span class="text-danger" *ngIf="!message.dateRead && message.senderUsername !== username">(Непрочитанное)</span>
+                        <span class="text-muted" *ngIf="!message.dateRead && message.senderUsername !== username">(Непрочитанное)</span>
                         <span class="text-success" *ngIf="message.dateRead && message.senderUsername !== username">(Прочитано {{message.dateRead  | timeago}})</span>
                      </small>
+                     <p>{{message.content}}</p>
                   </div>
-                  <p>{{message.content}}</p>
                </div>
             </div>
          </li>
